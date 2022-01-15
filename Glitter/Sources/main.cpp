@@ -71,15 +71,6 @@ int main(int argc, char * argv[]) {
         -0.2f,  0.0f, 0.0f,  1.0f, 1.0f, 1.0f
     };
     
-//    float verts[] = { // FIXME: Add colors
-//        -0.2f, 0.0f, 0.0f,
-//        0.0f,  0.3f, 0.0f,
-//        0.2f, 0.0f, 0.0f,
-//        0.2f, -0.3f, 0.0f,
-//        -0.2f, -0.3f, 0.0f,
-//        -0.2f, 0.0f, 0.0f,
-//    };
-    
     // Create VAO
     GLuint VAO;
     glGenVertexArrays(1, &VAO);
@@ -128,6 +119,11 @@ int main(int argc, char * argv[]) {
         GLint mLoc = glGetUniformLocation(myShader, "M");
         glUniformMatrix4fv(mLoc, 1, GL_FALSE, glm::value_ptr(transform));
         
+        // Color mask
+        glm::vec3 colorMask = glm::vec3(1.0f, 1.0f, 0.5f);
+        GLint cLoc = glGetUniformLocation(myShader, "colorMask");
+        glUniform3fv(cLoc, 1, glm::value_ptr(colorMask));
+        
         glBindVertexArray(VAO); // Bind VAO
         glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
         
@@ -138,6 +134,11 @@ int main(int argc, char * argv[]) {
         
         mLoc = glGetUniformLocation(myShader, "M");
         glUniformMatrix4fv(mLoc, 1, GL_FALSE, glm::value_ptr(transform));
+        
+        // Color mask
+        colorMask = glm::vec3(0.5f, 1.0f, 1.0f);
+        cLoc = glGetUniformLocation(myShader, "colorMask");
+        glUniform3fv(cLoc, 1, glm::value_ptr(colorMask));
         
         glBindVertexArray(VAO); // Bind VAO
         glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
@@ -150,6 +151,11 @@ int main(int argc, char * argv[]) {
         
         mLoc = glGetUniformLocation(myShader, "M");
         glUniformMatrix4fv(mLoc, 1, GL_FALSE, glm::value_ptr(transform));
+        
+        // Color mask
+        colorMask = glm::vec3(1.0f, 0.5f, 1.0f);
+        cLoc = glGetUniformLocation(myShader, "colorMask");
+        glUniform3fv(cLoc, 1, glm::value_ptr(colorMask));
         
         glBindVertexArray(VAO); // Bind VAO
         glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
