@@ -61,14 +61,24 @@ int main(int argc, char * argv[]) {
     // **************************************
     
     // Vertex info
-    float verts[] = { // FIXME: Add colors
-        -0.2f, 0.0f, 0.0f,
-        0.0f,  0.3f, 0.0f,
-        0.2f, 0.0f, 0.0f,
-        0.2f, -0.3f, 0.0f,
-        -0.2f, -0.3f, 0.0f,
-        -0.2f, 0.0f, 0.0f,
+    float verts[] = {
+        // positions         // colors
+        -0.2f,  0.0f, 0.0f,  1.0f, 0.0f, 0.0f,
+         0.0f,  0.3f, 0.0f,  0.0f, 1.0f, 0.0f,
+         0.2f,  0.0f, 0.0f,  0.0f, 0.0f, 1.0f,
+         0.2f, -0.3f, 0.0f,  1.0f, 1.0f, 1.0f,
+        -0.2f, -0.3f, 0.0f,  1.0f, 1.0f, 1.0f,
+        -0.2f,  0.0f, 0.0f,  1.0f, 1.0f, 1.0f
     };
+    
+//    float verts[] = { // FIXME: Add colors
+//        -0.2f, 0.0f, 0.0f,
+//        0.0f,  0.3f, 0.0f,
+//        0.2f, 0.0f, 0.0f,
+//        0.2f, -0.3f, 0.0f,
+//        -0.2f, -0.3f, 0.0f,
+//        -0.2f, 0.0f, 0.0f,
+//    };
     
     // Create VAO
     GLuint VAO;
@@ -88,9 +98,11 @@ int main(int argc, char * argv[]) {
                  GL_STATIC_DRAW);
     
     // Connect vertex data to shader
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0); // FIXME: Get color out somehow
-    
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
+    
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
     
     // **************************************
     

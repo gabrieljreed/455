@@ -1,5 +1,5 @@
 #version 330 core
-in vec4 color; // FIXME: How do you pass something in here?
+in vec3 color;
 out vec4 ColorOut;
 
 // Input color mask (uniform, vector)
@@ -9,5 +9,5 @@ void main()
 {
     // Multiply color by color mask before output 
     // ColorOut = color * colorMask;
-    ColorOut = vec4(1.0f, 1.0f, 1.0f, 1.0f);
+    ColorOut = vec4(color, 1.0f);
 }
