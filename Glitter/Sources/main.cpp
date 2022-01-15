@@ -13,6 +13,11 @@
 #include <cstdlib>
 #include <iostream>
 
+// GLM Headers
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 
 int main(int argc, char * argv[]) {
     
@@ -46,7 +51,7 @@ int main(int argc, char * argv[]) {
     glEnable(GL_DEPTH_TEST);
     
     
-    // MARK: Import my shader code
+    // Import shader code
     GLuint myShader = LoadProgram("/Users/gabrieljreed/Glitter/Glitter/Shaders/basic.vert", "/Users/gabrieljreed/Glitter/Glitter/Shaders/basic.frag");
     
     
@@ -54,6 +59,16 @@ int main(int argc, char * argv[]) {
     // **************************************
     // Setup Vertex arrays here
     // **************************************
+    
+    // Vertex info
+    float verts[] = { // FIXME: Add colors
+        -0.2f, 0.0f, 0.0f,
+        0.0f,  0.3f, 0.0f,
+        0.2f, 0.0f, 0.0f,
+        0.2f, -0.3f, 0.0f,
+        -0.2f, -0.3f, 0.0f,
+        -0.2f, 0.0f, 0.0f,
+    };
     
     // Create VAO
     GLuint VAO;
@@ -67,22 +82,13 @@ int main(int argc, char * argv[]) {
     // Bind VBO
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     
-    float verts[] = {
-        -0.2f, 0.0f, 0.0f,
-        0.0f,  0.3f, 0.0f,
-        0.2f, 0.0f, 0.0f,
-        0.2f, -0.3f, 0.0f,
-        -0.2f, -0.3f, 0.0f,
-        -0.2f, 0.0f, 0.0f,
-    };
-    
     glBufferData(GL_ARRAY_BUFFER,
                  sizeof(verts),
                  verts,
                  GL_STATIC_DRAW);
     
     // Connect vertex data to shader
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0); // FIXME: Get color out somehow
     
     glEnableVertexAttribArray(0);
     
@@ -101,8 +107,42 @@ int main(int argc, char * argv[]) {
         // Add rendering code here
         
         glUseProgram(myShader);
+        
+        // Set up transform matrix
+        glm::mat4 transform = glm::mat4(1.0f);
+        transform = glm::translate(transform, glm::vec3(-0.5f, -0.5f, 0.0f));
+        transform =glm::scale(transform, glm::vec3(2.0f, 1.2f, 0.5f));
+
+        GLint mLoc = glGetUniformLocation(myShader, "M");
+        glUniformMatrix4fv(mLoc, 1, GL_FALSE, glm::value_ptr(transform));
+        
         glBindVertexArray(VAO); // Bind VAO
         glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
+        
+        // Set up transform matrix
+        transform = glm::mat4(1.0f);
+        transform = glm::translate(transform, glm::vec3(0.1f, 0.1f, 0.0f));
+        transform =glm::scale(transform, glm::vec3(1.3f, 1.1f, 0.5f));
+        
+        mLoc = glGetUniformLocation(myShader, "M");
+        glUniformMatrix4fv(mLoc, 1, GL_FALSE, glm::value_ptr(transform));
+        
+        glBindVertexArray(VAO); // Bind VAO
+        glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
+        
+        
+        // Set up transform matrix
+        transform = glm::mat4(1.0f);
+        transform = glm::translate(transform, glm::vec3(0.6f, 0.5f, 0.0f));
+        transform =glm::scale(transform, glm::vec3(0.8f, 1.5f, 0.5f));
+        
+        mLoc = glGetUniformLocation(myShader, "M");
+        glUniformMatrix4fv(mLoc, 1, GL_FALSE, glm::value_ptr(transform));
+        
+        glBindVertexArray(VAO); // Bind VAO
+        glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
+        
+        
         glBindVertexArray(0); // Unvind VAO - you don't have to do these steps here because there's only one VAO
         
         // **********************************
