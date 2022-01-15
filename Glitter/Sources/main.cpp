@@ -42,7 +42,7 @@ int main(int argc, char * argv[]) {
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     #endif
     
-    auto mWindow = glfwCreateWindow(mWidth, mHeight, "OpenGL", nullptr, nullptr);
+    auto mWindow = glfwCreateWindow(mWidth, mHeight, "Lab 2", nullptr, nullptr);
     
     // Check for Valid Context
     if (mWindow == nullptr) {
@@ -117,9 +117,12 @@ int main(int argc, char * argv[]) {
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     
     float verts[] = {
-        -0.4f, -0.3f, 0.0f,
-        0.0f,  0.4f, 0.0f,
-        0.4f, -0.3f, 0.0f,
+        -0.2f, 0.0f, 0.0f,
+        0.0f,  0.3f, 0.0f,
+        0.2f, 0.0f, 0.0f,
+        0.2f, -0.3f, 0.0f,
+        -0.2f, -0.3f, 0.0f,
+        -0.2f, 0.0f, 0.0f,
     };
     
     glBufferData(GL_ARRAY_BUFFER,
@@ -148,7 +151,7 @@ int main(int argc, char * argv[]) {
         
         glUseProgram(shaderProgram);
         glBindVertexArray(VAO); // Bind VAO
-        glDrawArrays(GL_TRIANGLE_FAN, 0, 3);
+        glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
         glBindVertexArray(0); // Unvind VAO - you don't have to do these steps here because there's only one VAO
         
         // **********************************
